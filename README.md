@@ -1,158 +1,185 @@
-Intent-Based LLM Orchestrator
+# Intent-Based LLM Orchestrator
 
-A modular multi-expert LLM orchestration system that analyzes a user's prompt and dynamically routes it to the most suitable specialized model.
-The system uses intent detection to decide which expert model (reasoning, coding, math, research, etc.) should generate the response.
+A modular **multi-expert LLM orchestration system** that analyzes a user's prompt and dynamically routes it to the most suitable specialized model.
 
-Instead of relying on a single LLM for every task, this project demonstrates a routing-based architecture where different models handle different types of problems.
+Instead of relying on a single model for every task, this project demonstrates a **routing-based architecture** where different models handle different types of problems.
+
+The system uses **OpenRouter** to access multiple models through a unified API.
 
 ---
 
-Overview
+## Overview
 
 Large Language Models are strong generalists, but different models perform better at different tasks.
-This project implements a prompt routing mechanism that:
 
-1. Analyzes the user's intent
-2. Selects the most appropriate expert model
-3. Sends the request to that model
-4. Returns the generated response
+This project implements a **prompt routing mechanism** that:
 
-The system uses OpenRouter to access multiple models through a unified API.
+1. Analyzes the user's intent  
+2. Selects the most appropriate expert model  
+3. Sends the request to that model  
+4. Returns the generated response  
 
 ---
 
-Architecture
+## Architecture
 
+```
 User Prompt
-↓
+      ↓
 Intent Routing Model
-↓
+      ↓
 Expert Selection
-↓
+      ↓
 Specialized LLM
-↓
+      ↓
 Response Generation
+```
 
-The router evaluates the task requirements and chooses the expert most likely to produce the best response.
-
----
-
-Available Experts
-
-The system includes multiple expert categories:
-
-- general – everyday questions and simple explanations
-- coding – programming help, debugging, algorithms
-- reasoning – logical analysis and step-by-step thinking
-- research – factual queries and information retrieval
-- creative – storytelling, writing, and creative tasks
-- math – equations, calculations, symbolic reasoning
-- analysis – comparisons, critical evaluation, trade-offs
-- fallback – used if no clear category is detected
-
-Each expert maps to a specific LLM optimized for that task.
+The router evaluates the task requirements and selects the expert most likely to produce the best response.
 
 ---
 
-Routing Logic
+## Available Experts
+
+The system contains multiple expert categories:
+
+| Expert | Purpose |
+|------|------|
+| **general** | Everyday questions and simple explanations |
+| **coding** | Programming help, debugging, algorithms |
+| **reasoning** | Logical analysis and step-by-step thinking |
+| **research** | Fact-based queries and information retrieval |
+| **creative** | Storytelling, writing, creative tasks |
+| **math** | Equations, calculations, symbolic reasoning |
+| **analysis** | Comparisons, evaluations, trade-offs |
+| **fallback** | Used when no category clearly applies |
+
+Each expert maps to a specific **LLM optimized for that task.**
+
+---
+
+## Routing Logic
 
 The router determines the expert by evaluating:
 
-- Whether the prompt requires technical code generation
-- Whether it needs logical reasoning
-- Whether it requires factual information
-- Whether it involves creative writing
-- Whether it contains mathematical calculations
-- Whether it asks for structured analysis or comparison
+- Whether the prompt requires **technical code generation**
+- Whether it requires **logical reasoning**
+- Whether it needs **factual or real-time information**
+- Whether it involves **creative writing**
+- Whether it requires **mathematical calculations**
+- Whether it asks for **structured comparison or analysis**
 
-The routing model outputs a JSON object specifying the selected expert.
+The routing model outputs a structured JSON response:
+
+```json
+{
+  "selected_expert": "expert_name"
+}
+```
 
 ---
 
-Example
+## Example
 
-User Prompt:
+**User Prompt**
 
+```
 Solve 145 × 27 step by step
+```
 
-Router Decision:
+**Router Output**
 
+```json
 {
   "selected_expert": "math"
 }
+```
 
-The request is then forwarded to the math-optimized model.
+The request is then forwarded to the **math-optimized model**.
 
 ---
 
-Tech Stack
+## Tech Stack
 
 - Python
 - OpenRouter API
-- Multiple LLMs
+- Multiple LLM providers
 - Requests library
 
 ---
 
-Installation
+## Installation
 
 Clone the repository:
 
+```bash
 git clone https://github.com/yourusername/intent-based-llm-orchestrator.git
 cd intent-based-llm-orchestrator
+```
 
 Install dependencies:
 
+```bash
 pip install -r requirements.txt
+```
 
 ---
 
-Environment Variables
+## Environment Variables
 
-Create a ".env" file or export your API key:
+Create a `.env` file or export your API key:
 
+```
 OPENROUTER_API_KEY=your_api_key_here
+```
 
-Never commit API keys to the repository.
+Never commit API keys to a public repository.
 
 ---
 
-Running the Project
+## Running the Project
 
+```bash
 python main.py
+```
 
-Then enter your prompt in the terminal.
+Example interaction:
 
-Example:
-
+```
 You: Compare centralized and decentralized systems
+```
 
 The router will select the appropriate expert and generate a response.
 
 ---
 
-Project Purpose
+## Project Purpose
 
-This project demonstrates the concept of LLM orchestration, where multiple models collaborate through routing logic to improve response quality.
+This project demonstrates **LLM orchestration**, where multiple specialized models collaborate through routing logic to improve response quality.
 
-It is intended as a learning project exploring AI system design and prompt routing architectures.
+It explores **AI system design concepts** such as:
 
----
-
-Possible Improvements
-
-Future extensions could include:
-
-- confidence scoring for expert selection
-- multi-expert collaboration
-- streaming responses
-- caching frequent queries
-- evaluation metrics for routing accuracy
-- API interface using FastAPI
-- UI dashboard for routing visualization
+- model routing
+- task specialization
+- prompt orchestration
+- multi-model architectures
 
 ---
 
-License
+## Possible Improvements
+
+Future enhancements could include:
+
+- confidence scoring for routing decisions  
+- multi-expert collaboration  
+- response streaming  
+- query caching  
+- evaluation metrics for routing accuracy  
+- FastAPI backend  
+- web interface for routing visualization  
+
+---
+
+## License
 
 MIT License
